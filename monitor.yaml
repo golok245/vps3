@@ -1,0 +1,21 @@
+name: Monitor VPS
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Menjalankan setiap 30 menit
+
+jobs:
+  check_vps:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: sudo apt-get install -y python3 python3-pip
+
+      - name: Run VPS status check
+        run: |
+          pip3 install requests
+          python3 scripts/check_vps.py
